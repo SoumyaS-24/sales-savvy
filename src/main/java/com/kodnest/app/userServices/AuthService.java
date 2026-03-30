@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,7 +32,6 @@ public class AuthService {
     private final BCryptPasswordEncoder passwordEncoder;
 
     // Injecting jwt.secret from properties file
-    @Autowired
     public AuthService(UserRepository userRepository, JWTTokenRepository jwtTokenRepository,
                        @Value("${jwt.secret}") String jwtSecret) {
         this.userRepository = userRepository;
@@ -123,6 +121,23 @@ public class AuthService {
                 .getBody()
                 .getSubject();
     }
-}
+    
+    
+    public void logout(User user) {
+        int userId = user.getUserId();
+
+        // Retrieve the JWT token associated with the user
+        JWTToken token = jwtTokenRepository.findByUserId(userId);
+
+        // If a token exists, delete it from the repository
+        if (token != null) {
+            jwtTokenRepository.deleteByUserId(userId);
+        }
+    }
+    
+    }
+
+    
+
 
 
