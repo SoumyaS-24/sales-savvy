@@ -108,10 +108,10 @@ public class CartService {
 
     
     public void updateCartItemQuantity(int userId, int productId, int quantity) {
-        User user = userRepository.findById(userId)
+        userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        Product product = productRepository.findById(productId)
+        productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found"));
 
         // Fetch cart item for this userId and productId
@@ -129,10 +129,10 @@ public class CartService {
     }
     
     public void deleteCartItem(int userId, int productId) {
-        User user = userRepository.findById(userId)
+        userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        Product product = productRepository.findById(productId)
+        productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("Product not found"));
 
         cartRepository.deleteCartItem(userId, productId);

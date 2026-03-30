@@ -14,7 +14,6 @@ import com.kodnest.app.userrepositories.UserRepository;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5174", allowCredentials = "true")
 @RequestMapping("/api/cart")
 public class CartController {
 
