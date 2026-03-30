@@ -35,7 +35,7 @@ public class SecurityConfig {
                                 "/api/users/register", "/api/auth/login")
                         .permitAll() // ✅ public
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/**").hasRole("CUSTOMER")
+                        .requestMatchers("/api/**").hasAnyRole("CUSTOMER","ADMIN")
                         .anyRequest().authenticated() // 🔒 secured
                 ).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
@@ -54,6 +54,7 @@ public class SecurityConfig {
         config.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/api/**", config);
+        source.registerCorsConfiguration("/admin/**", config);
         return source;
     }
 }
